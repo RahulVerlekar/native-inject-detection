@@ -3,7 +3,16 @@
 
 # Sets the minimum version of CMake required to build the native library.
 
-cmake_minimum_required(VERSION 3.18.1)
+cmake_minimum_required(VERSION 3.4.1)
+
+set(can_use_assembler TRUE)
+enable_language(ASM)
+
+if(${ANDROID_ABI} STREQUAL "armeabi-v7a" OR ${ANDROID_ABI} STREQUAL "x86")
+    add_definitions("-D_32_BIT")
+elseif(${ANDROID_ABI} STREQUAL "arm64-v8a" OR ${ANDROID_ABI} STREQUAL "x86_64")
+    add_definitions("-D_64_BIT")
+endif()
 
 # Declares and names the project.
 
